@@ -13,11 +13,7 @@ print '\n',datetime.datetime.now(),'\n'
 scan_line_loc = [18,53,88,123,165]
 oL1=[];oL2=[];oL3=[];oL4=[];oL5=[]
 L1=[];L2=[];L3=[];L4=[];L5=[]
-<<<<<<< HEAD
-rfpin=10;rbpin=8;lfpin=16;lbpin=12 #pins
-=======
-rfpin=16;rbpin=12;lfpin=8;lbpin=10 #pins
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
+rfpin=12;rbpin=16;lfpin=8;lbpin=10 #pins
 GPIO.setup(rfpin,GPIO.OUT);GPIO.setup(rbpin,GPIO.OUT);GPIO.setup(lfpin,GPIO.OUT);GPIO.setup(lbpin,GPIO.OUT)
 rf = GPIO.PWM(rfpin,100);rb = GPIO.PWM(rbpin,100);lf = GPIO.PWM(lfpin,100);lb = GPIO.PWM(lbpin,100);
 rf.start(0);rb.start(0);lf.start(0);lb.start(0);
@@ -63,11 +59,7 @@ def get_initial_white_line_array(array):
     return L
 
 def get_black_line_array(array,oL):
-<<<<<<< HEAD
-    thresold = 107;L=[]#here thresold is not set average(array)/2
-=======
     thresold = 100;L=[]#here thresold is not set average(array)/2
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
     for j in range(0,len(array)):
             if array[j]<thresold:
                 append(oL,j,L)
@@ -89,61 +81,28 @@ def get_white_line_array(array,oL):
 ############## functions end
 
 #hostipadd="http://"+raw_input('enter ip address of host: ')+":8080/video"
-<<<<<<< HEAD
-hostipadd="http://192.168.43.1:8080/video"
+hostipadd="http://192.168.0.101:8080/video"
 cap = cv2.VideoCapture()
 cap.open(hostipadd)
-=======
-hostipadd="http://192.168.0.101:8080/video"
-cap = cv2.VideoCapture(0)
-#cap.open(hostipadd)
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
 hor_line_len = cap.get(3)
 center_pt = hor_line_len/2 -1 #ans:72--bcos 144 pixels
 #here 176 hori. lines & 144 vertical lines
 cenpt=71
 for x in range(0,900000):
-<<<<<<< HEAD
     ret, frame = cap.read()
     grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     L1=[];L2=[];L3=[];L4=[];L5=[]
-=======
-#	e1 = cv2.getTickCount()
-	ret, frame = cap.read()
-	grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#	e2 = cv2.getTickCount()
-#	time = 1/((e2 - e1)/ cv2.getTickFrequency())
-'''    L1=[];L2=[];L3=[];L4=[];L5=[]
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
     
     if x==0:
         #L1 = checkarray(get_initial_black_line_array(grey[scan_line_loc[0]]))
         #L2 = checkarray(get_initial_black_line_array(grey[scan_line_loc[1]]))
-<<<<<<< HEAD
-        L3 = checkarray(get_initial_black_line_array(grey[scan_line_loc[3]]))
-        #L4 = checkarray(get_initial_black_line_array(grey[scan_line_loc[3]]))
-        L5 = checkarray(get_initial_black_line_array(grey[scan_line_loc[4]]))
-=======
         L3 = checkarray(get_initial_white_line_array(grey[scan_line_loc[3]]))
         #L4 = checkarray(get_initial_black_line_array(grey[scan_line_loc[3]]))
         L5 = checkarray(get_initial_white_line_array(grey[scan_line_loc[4]]))
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
     #print center_pt,average(L1),average(L2),average(L3),average(L4),average(L5)
     else:
         #L1 = get_black_line_array(grey[scan_line_loc[0]],oL1)
         #L2 = get_black_line_array(grey[scan_line_loc[1]],oL2)
-<<<<<<< HEAD
-        L3 = get_black_line_array(grey[scan_line_loc[3]],oL3)
-        #L4 = get_black_line_array(grey[scan_line_loc[3]],oL4)
-        L5 = get_black_line_array(grey[scan_line_loc[4]],oL5)
-    #oL1=L1; oL2=L2; oL3=L3; 
-    oL3=L3; oL5=L5
-    print average(L5),len(L5)
-    pl5=average(L5);sl5=((center_pt-pl5)*(215/72));#this 200 and 72 is factor to change speed of single wheel
-    pl3=average(L3);sl3=((center_pt-pl3)*(200/72));
-    print 'L5 pos' ,pl5, 'lenght',len(L5),average(lastseen)
-    print 'L3 pos' , pl3 , 'length',len(L3)
-=======
         L3 = get_white_line_array(grey[scan_line_loc[3]],oL3)
         #L4 = get_black_line_array(grey[scan_line_loc[3]],oL4)
         L5 = get_white_line_array(grey[scan_line_loc[4]],oL5)
@@ -154,7 +113,6 @@ for x in range(0,900000):
     pl3=average(L3);sl3=((center_pt-pl3)*(200/72));
     print 'L5 pos' ,pl5, 'lenght',len(L5),average(lastseen)
     print 'L3 pos' , pl3 , 'length',len(L3),sl5
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
     if pl5 != 999 and len(L5)<=59 : #this is simple curve case sl5> mens left turn and vice versa
 		if sl5>0:
 			if sl5<100:
@@ -191,51 +149,24 @@ for x in range(0,900000):
 				lf.ChangeDutyCycle(100-sl5t)
 				lb.ChangeDutyCycle(0)
 				rb.ChangeDutyCycle(0)
-<<<<<<< HEAD
-				rf.ChangeDutyCycle(90)
-=======
 				rf.ChangeDutyCycle(80)
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
 			else:
 				lf.ChangeDutyCycle(0)
 				lb.ChangeDutyCycle(40)
 				rb.ChangeDutyCycle(0)
-<<<<<<< HEAD
-				rf.ChangeDutyCycle(90)
-=======
 				rf.ChangeDutyCycle(100)
 				sleep(0.2)
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
 		elif sl5<0:
 			sl5t=sl5-len(L5)
 			if sl5t>-100:
 				rf.ChangeDutyCycle(100+sl5t)
 				rb.ChangeDutyCycle(0)
 				lb.ChangeDutyCycle(0)
-<<<<<<< HEAD
-				lf.ChangeDutyCycle(90)
-=======
 				lf.ChangeDutyCycle(100)
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
 			else:
 				rf.ChangeDutyCycle(0)
 				rb.ChangeDutyCycle(40)
 				lb.ChangeDutyCycle(0)
-<<<<<<< HEAD
-				lf.ChangeDutyCycle(90)
-				
-    elif pl5 != 999 and len(L5)>57 and len(L5)<126 and pl3 != 999:
-		if sl5>0:
-			lf.ChangeDutyCycle(70)
-			lb.ChangeDutyCycle(0)
-			rb.ChangeDutyCycle(0)
-			rf.ChangeDutyCycle(70)
-		elif sl5<0:
-			rf.ChangeDutyCycle(70)
-			rb.ChangeDutyCycle(0)
-			lb.ChangeDutyCycle(0)
-			lf.ChangeDutyCycle(70)
-=======
 				lf.ChangeDutyCycle(100)
 				sleep(0.3)
 				
@@ -252,7 +183,6 @@ for x in range(0,900000):
 			lb.ChangeDutyCycle(0)
 			lf.ChangeDutyCycle(50)
 			sleep(0.5)
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
 			
     
     elif pl5 != 999 and len(L5)>125 and pl3 != 999:
@@ -260,29 +190,11 @@ for x in range(0,900000):
 		rb.ChangeDutyCycle(0)
 		lb.ChangeDutyCycle(0)
 		lf.ChangeDutyCycle(60)
-<<<<<<< HEAD
-=======
 		sleep(0.8)
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
 		
 	
     elif pl5 == 999 and pl3 == 999:
 		print 'no line at all'
-<<<<<<< HEAD
-		if average(lastseen)<center_pt-2 and len(lastseen)<100:
-			rf.ChangeDutyCycle(70)
-			rb.ChangeDutyCycle(0)
-			lb.ChangeDutyCycle(50)
-			lf.ChangeDutyCycle(0)
-		elif average(lastseen)>=center_pt+2 and len(lastseen)<100:
-			rf.ChangeDutyCycle(0)
-			rb.ChangeDutyCycle(50)
-			lb.ChangeDutyCycle(0)
-			lf.ChangeDutyCycle(70)
-				
-
-
-=======
 		if average(lastseen)<center_pt and len(lastseen)<100:
 			rf.ChangeDutyCycle(60)
 			rb.ChangeDutyCycle(0)
@@ -295,8 +207,7 @@ for x in range(0,900000):
 			lf.ChangeDutyCycle(60)
 				
 
-'''
->>>>>>> 7328f345d87149995b7a357acd4cad3bea894b6f
+
 
 
 
